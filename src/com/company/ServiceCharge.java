@@ -6,6 +6,7 @@ package com.company;
 public class ServiceCharge {
 
     int employeeUnionID;
+    int test;
     double chargeValue;
 
 
