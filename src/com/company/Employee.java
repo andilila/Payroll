@@ -12,7 +12,7 @@ public class Employee {
         TimeCard timeCard = new TimeCard ();
 
         // we can not call it union because the class is going to be different
-        UnionCorp unionID = new UnionCrop ();
+        UnionCorp unionID = new UnionCorp();
 
 
 
