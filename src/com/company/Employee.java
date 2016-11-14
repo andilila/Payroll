@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class Employee {
 
     private int empId;
@@ -7,25 +9,42 @@ public class Employee {
     private int empUnionId;
     private double payRate;
     private int hours;
-    private TimeCard timeCard = new TimeCard ();
-    private SaleReceipt salesReceipt = new SaleReceipt();
+    private double commissionRate;
+    private PaymentMethod paymentMethod = new PaymentMethod();
+    private ArrayList<TimeCard> timeCards = new ArrayList<TimeCard>();
+    private ArrayList<SaleReceipt> salesReceipts = new ArrayList<SaleReceipt>();
     
     //Constructors
-    public Employee(int empId, double salaryPay, int empUnionId, SaleReceipt salesReceipt){
+    public Employee(int empId, double salaryPay, int empUnionId, double commissionRate){
     	this.setEmpId(empId);
     	this.setSalaryPay(salaryPay);
     	this.setEmpUnionId(empUnionId);
-    	this.setSalesReceipt(salesReceipt);
+    	this.setCommissionRate(commissionRate);
     }
-    public Employee(int empId, double payRate, int hours , TimeCard timeCard){
+    public Employee(int empId, double payRate, int hours){
     	this.setEmpId(empId);
     	this.setPayRate(payRate);
     	this.setHours(hours);
-    	this.setTimeCard(timeCard);
     }
     
     //Methods
-    
+    public void storeTimeCards(ArrayList<TimeCard> timeCards){
+    	this.timeCards = timeCards;
+    }
+    public void storeSalesReceipts(ArrayList<SaleReceipt> salesReceipts){
+    	this.salesReceipts = salesReceipts;
+    }
+    public double hourlyPay(){
+    	return payRate * hours;
+    }
+    public double salaryPayWithCommissions(){
+    	double total;
+    	total = salaryPay;
+    	for(int i = 0; i < salesReceipts.size();i++){
+    		total += (salesReceipts.get(i).getRecValue() * this.commissionRate);
+    	}
+    	return total;
+    }
     
     //Getters and Setters
 	public int getEmpId() {
@@ -63,17 +82,46 @@ public class Employee {
 		if(hours >= 0)
 			this.hours = hours;
 	}
-	public TimeCard getTimeCard() {
-		return timeCard;
+	public TimeCard getTimeCard(int timeCardId){
+    	TimeCard cardToReturn = null;
+    	for(int i = 0; i < timeCards.size(); i++)
+    	{
+    		if(timeCards.get(i).getTimeCardId() == timeCardId){
+    			cardToReturn = timeCards.get(i);
+    		}
+    	}
+    	return cardToReturn;
+    }
+	public void addTimeCard(int id, double hours, double overtime) {
+		timeCards.add(new TimeCard(id,hours,overtime));
 	}
-	public void setTimeCard(TimeCard timeCard) {
-		this.timeCard = timeCard;
+	public SaleReceipt getSalesReceipt(int recId) {
+		SaleReceipt receiptToReturn = null;
+		for(int i = 0; i < salesReceipts.size();i++){
+			if(salesReceipts.get(i).getRecId() == recId){
+				receiptToReturn = salesReceipts.get(i);
+			}
+		}
+		return receiptToReturn;
 	}
-	public SaleReceipt getSalesReceipt() {
-		return salesReceipt;
+	public void addSalesReceipt(int id, double value) {
+		salesReceipts.add(new SaleReceipt(id, value));
 	}
-	public void setSalesReceipt(SaleReceipt salesReceipt) {
-		this.salesReceipt = salesReceipt;
+	public double getCommissionRate(){
+		return this.commissionRate;
 	}
-   
+	public void setCommissionRate(double commissionRate){
+		if(commissionRate >= 0){
+			this.commissionRate = commissionRate;
+		}
+	}
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String address, boolean isHeld) {
+		this.paymentMethod = new PaymentMethod(address, isHeld);
+	}
+	public void setPaymentMethod(String accountNumber){
+		this.paymentMethod = new PaymentMethod(accountNumber);
+	}
 }
