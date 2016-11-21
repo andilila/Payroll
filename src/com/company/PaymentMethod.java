@@ -7,6 +7,31 @@ import java.util.Date;
  */
 public class PaymentMethod {
 
-    Date dt = new Date ();
-    String payOption;
+    private String address;
+    private int accountNumber;
+ 
+    
+    public PaymentMethod(){
+    	super();
+    }
+    
+    public PaymentMethod(int accountNumber){
+    	this.setAccountNumber(accountNumber);
+    }
+    public PaymentMethod(String address){
+    	this.setAddress(address);
+    }
+    
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public int getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(int accountNumber) {
+		this.accountNumber = accountNumber;
+	}
 }
