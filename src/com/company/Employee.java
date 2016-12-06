@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Employee {
 
     private int empId;
-    private double salaryPay;
+    private String name;
+    private double salary;
     private int empUnionId;
     private double payRate;
     private int hours;
@@ -15,14 +16,22 @@ public class Employee {
     private ArrayList<SaleReceipt> salesReceipts = new ArrayList<SaleReceipt>();
     
     //Constructors
-    public Employee(int empId, double salaryPay, int empUnionId, double commissionRate){
+    public Employee(int empId, String name, double salary, int empUnionId, double commissionRate){
     	this.setEmpId(empId);
-    	this.setSalaryPay(salaryPay);
+    	this.setName(name);
+    	this.setSalary(salary);
     	this.setEmpUnionId(empUnionId);
     	this.setCommissionRate(commissionRate);
     }
-    public Employee(int empId, double payRate, int hours){
+    public Employee(int empId, String name, double salary, double commissionRate){
     	this.setEmpId(empId);
+    	this.setName(name);
+    	this.setSalary(salary);
+    	this.setCommissionRate(commissionRate);
+    }
+    public Employee(int empId, String name, double payRate, int hours){
+    	this.setEmpId(empId);
+    	this.setName(name);
     	this.setPayRate(payRate);
     	this.setHours(hours);
     }
@@ -34,16 +43,19 @@ public class Employee {
     public void storeSalesReceipts(ArrayList<SaleReceipt> salesReceipts){
     	this.salesReceipts = salesReceipts;
     }
-    public double hourlyPay(){
-    	return payRate * hours;
-    }
-    public double salaryPayWithCommissions(){
-    	double total;
-    	total = salaryPay;
-    	for(int i = 0; i < salesReceipts.size();i++){
-    		total += (salesReceipts.get(i).getRecValue() * this.commissionRate);
+    public void calcHours(){
+    	int tempHrs = 0;
+    	for(int i = 0; i < timeCards.size(); i++){
+    		tempHrs += timeCards.get(i).getHoursPerDay();
     	}
-    	return total;
+    	setHours(tempHrs);
+    	
+    }
+    public ArrayList<SaleReceipt> salesReceiptsArray(){
+    	return salesReceipts;
+    }
+    public ArrayList<TimeCard> timeCardsArray(){
+    	return timeCards;
     }
     
     //Getters and Setters
@@ -54,12 +66,12 @@ public class Employee {
 		if(empId >= 0)
 			this.empId = empId;
 	}
-	public double getSalaryPay() {
-		return salaryPay;
+	public double getSalary() {
+		return salary;
 	}
-	public void setSalaryPay(double salaryPay) {
-		if(salaryPay >= 0)
-			this.salaryPay = salaryPay;
+	public void setSalary(double salary) {
+		if(salary >= 0)
+			this.salary = salary;
 	}
 	public int getEmpUnionId() {
 		return empUnionId;
@@ -119,9 +131,15 @@ public class Employee {
 		return paymentMethod;
 	}
 	public void setPaymentMethod(String address, boolean isHeld) {
-		this.paymentMethod = new PaymentMethod(address, isHeld);
+		this.paymentMethod = new PaymentMethod(address);
 	}
-	public void setPaymentMethod(String accountNumber){
+	public void setPaymentMethod(int accountNumber){
 		this.paymentMethod = new PaymentMethod(accountNumber);
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

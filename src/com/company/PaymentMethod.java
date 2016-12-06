@@ -8,19 +8,17 @@ import java.util.Date;
 public class PaymentMethod {
 
     private String address;
-    private String accountNumber;
-    private boolean isHeld;
+    private int accountNumber; 
     
     public PaymentMethod(){
     	super();
     }
     
-    public PaymentMethod(String accountNumber){
+    public PaymentMethod(int accountNumber){
     	this.setAccountNumber(accountNumber);
     }
-    public PaymentMethod(String address, boolean isHeld){
+    public PaymentMethod(String address){
     	this.setAddress(address);
-    	this.setHeld(isHeld);
     }
     
 	public String getAddress() {
@@ -29,16 +27,10 @@ public class PaymentMethod {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getAccountNumber() {
+	public int getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
-	}
-	public boolean isHeld() {
-		return isHeld;
-	}
-	public void setHeld(boolean isHeld) {
-		this.isHeld = isHeld;
 	}
 }
