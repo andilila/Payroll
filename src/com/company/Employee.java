@@ -6,7 +6,7 @@ public class Employee {
 
     private int empId;
     private String name;
-    private double salaryPay;
+    private double salary;
     private int empUnionId;
     private double payRate;
     private int hours;
@@ -16,11 +16,17 @@ public class Employee {
     private ArrayList<SaleReceipt> salesReceipts = new ArrayList<SaleReceipt>();
     
     //Constructors
-    public Employee(int empId, String name, double salaryPay, int empUnionId, double commissionRate){
+    public Employee(int empId, String name, double salary, int empUnionId, double commissionRate){
     	this.setEmpId(empId);
     	this.setName(name);
-    	this.setSalaryPay(salaryPay);
+    	this.setSalary(salary);
     	this.setEmpUnionId(empUnionId);
+    	this.setCommissionRate(commissionRate);
+    }
+    public Employee(int empId, String name, double salary, double commissionRate){
+    	this.setEmpId(empId);
+    	this.setName(name);
+    	this.setSalary(salary);
     	this.setCommissionRate(commissionRate);
     }
     public Employee(int empId, String name, double payRate, int hours){
@@ -45,32 +51,11 @@ public class Employee {
     	setHours(tempHrs);
     	
     }
-    public double getHourlyPay(){
-    	return getPayRate() * getHours();
+    public ArrayList<SaleReceipt> salesReceiptsArray(){
+    	return salesReceipts;
     }
-    public double getAmmountPaid(){
-    	if(getHours() == 0 && salesReceipts.size() == 0)
-    		return getSalaryPay();
-    	else if(salesReceipts.size() != 0)
-    		return getSalaryPayWithCommissions();
-    	else
-    		return getHourlyPay() + getOvertimePay();
-    }
-    public double getOvertimePay(){
-    	double overtimeHours = 0;
-    	for(int i = 0; i < timeCards.size();i++){
-    		overtimeHours += timeCards.get(i).getOvertimeHours();
-    	}
-    	    	
-    	return overtimeHours * (getPayRate() * 1.5);
-    }
-    public double getSalaryPayWithCommissions(){
-    	double total;
-    	total = salaryPay;
-    	for(int i = 0; i < salesReceipts.size();i++){
-    		total += (salesReceipts.get(i).getRecValue() * this.commissionRate);
-    	}
-    	return total;
+    public ArrayList<TimeCard> timeCardsArray(){
+    	return timeCards;
     }
     
     //Getters and Setters
@@ -81,12 +66,12 @@ public class Employee {
 		if(empId >= 0)
 			this.empId = empId;
 	}
-	public double getSalaryPay() {
-		return salaryPay;
+	public double getSalary() {
+		return salary;
 	}
-	public void setSalaryPay(double salaryPay) {
-		if(salaryPay >= 0)
-			this.salaryPay = salaryPay;
+	public void setSalary(double salary) {
+		if(salary >= 0)
+			this.salary = salary;
 	}
 	public int getEmpUnionId() {
 		return empUnionId;

@@ -8,8 +8,7 @@ import java.util.Date;
 public class PaymentMethod {
 
     private String address;
-    private int accountNumber;
- 
+    private int accountNumber; 
     
     public PaymentMethod(){
     	super();
